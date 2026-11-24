@@ -157,13 +157,10 @@ namespace ShurikenBridge.Samples
             _matDebrisUrpParticleLit = new Material(urpPartLit) { name = "SB_Sample_3_Debris_URPParticlesLit" };
             _matDebrisUrpParticleLit.SetColor("_BaseColor", new Color(0.88f, 0.52f, 0.24f, 1f));
 
-            GameObject tmpS = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            _sphereMesh = tmpS.GetComponent<MeshFilter>().sharedMesh;
-            Destroy(tmpS);
+            _sphereMesh = Resources.GetBuiltinResource<Mesh>("New-Sphere.fbx");
+            if (_sphereMesh == null) _sphereMesh = Resources.GetBuiltinResource<Mesh>("Sphere.fbx");
 
-            GameObject tmpC = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            _cubeMesh = tmpC.GetComponent<MeshFilter>().sharedMesh;
-            Destroy(tmpC);
+            _cubeMesh = Resources.GetBuiltinResource<Mesh>("Cube.fbx");
 
             _root = new GameObject($"ShurikenBridgeSampleEmitters_{EmitterCount}").transform;
             int cols = 64;

@@ -12,7 +12,7 @@ Unity의 기본 파티클 시스템인 **Shuriken(`ParticleSystem`)**은 모든 
 
 ## 1. 어떤 성능 효과를 얻을 수 있는가? (2,048 이미터 실측 벤치마크)
 
-### 측정 환경
+### 1-1. 데스크톱 실측 벤치마크 (Apple M4 Pro)
 - **하드웨어**: Apple M4 Pro (`1038×760`, `vSyncCount = 0`)
 - **엔진 환경**: Unity 6000.x (URP 17.3 RenderGraph, Linear Color Space)
 - **워크로드**: **2,048개 활성 이미터 / 131,072개 파티클 / 4종 머티리얼** (6대 고급 모듈 전부 ON: `Main`, `Multi-Burst`, `Donut/Cone/Sphere/Box Shape`, `Over Lifetime & By Speed 커브`, `Noise`, `Collision(Planes) 3회 바운스`, `ParticleSystemForceField` 외부 역장)
@@ -27,6 +27,18 @@ Unity의 기본 파티클 시스템인 **Shuriken(`ParticleSystem`)**은 모든 
 | **>20ms 프레임 스파이크** | `90 / 90 frames` (`100%`) | **`0 / 90 frames` (`0%`)** | **`0 / 90 frames` (`0%`)** | **프레임 스파이크 100% 제거** |
 | **Draw Calls** | `1,448.4` | **`26.0`** | **`23.0`** | **`-98.2%` 감소 (`1,448 -> 26`)** |
 | **SetPass Calls** | `16.0` | **`9.0`** | **`10.0`** | **`-43.8%` 감소** |
+
+### 1-2. 모바일 실기기 벤치마크 (Samsung Galaxy Z Fold 2 — Android Vulkan)
+- **하드웨어**: Samsung Galaxy Z Fold 2 (`SM-F916N`, Qualcomm Snapdragon 865+, `Adreno 650` GPU, Android 13, `2658×960` @ 60Hz 하드웨어 VSync)
+- **엔진 환경**: Unity 6000.x (IL2CPP ARM64, Vulkan, URP 17.3 RenderGraph)
+- **워크로드**: 동일한 **2,048개 활성 이미터 / 131,072개 파티클 / 4종 머티리얼** (`3D Lit Mesh 연기 구`, `속도 정렬 스파크 + 바닥 3회 바운스 충돌`, `Additive 화염 빌보드`, `3D Lit Mesh 광석 큐브 + 바닥 바운스 충돌`, `ParticleSystemForceField` 전역 바람 역장)
+
+| 측정 지표 | Phase 1: 순정 CPU Shuriken (`126,260` 활성 파티클) | Phase 2: `ShurikenBridge` 광역 뷰 (`66,826` 가시 파티클 + 3단계 GPU LOD) | Phase 3: `ShurikenBridge` 섹터 줌인 뷰 (`34,042` 가시 파티클 + 6평면 GPU 컬링) | 모바일 실기기 개선 효과 (Native $\to$ `ShurikenBridge`) |
+| :--- | :---: | :---: | :---: | :---: |
+| **평균 FPS (60Hz 디스플레이)** | `15.6 FPS` | **`59.9 FPS` (60Hz 풀프레임)** | **`59.9 FPS` (60Hz 풀프레임)** | **`3.84배` (`15.6 FPS -> 60 FPS 고정`)** |
+| **평균 Frame Time** | `64.31 ms` *(Min `50.0ms`, Max `83.4ms`)* | **`16.68 ms`** | **`16.68 ms`** | **`-74.1%` 단축** |
+| **>20ms 프레임 스파이크** | `55 / 55 frames` (`100%`) | **`0 / 90 frames` (`0%`)** | **`0 / 90 frames` (`0%`)** | **프레임 스파이크 100% 제거** |
+| **Draw Calls** | `2,062.0` (`Batches: 1,582.9`, `SetPass: 562.9`) | **`25.0`** | **`26.0`** | **`-98.8%` 감소 (`2,062 -> 25`)** |
 
 ---
 

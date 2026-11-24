@@ -12,7 +12,7 @@ Unity's built-in **Shuriken (`ParticleSystem`)** simulates and sorts every parti
 
 ## 1. What Performance Gains Can You Expect? (Measured Benchmark)
 
-### Test Environment
+### 1-1. Desktop Benchmark (Apple M4 Pro)
 - **Hardware**: Apple M4 Pro (`1038×760`, `vSyncCount = 0`)
 - **Engine**: Unity 6000.x (URP 17.3 RenderGraph, Linear Color Space)
 - **Workload**: **2,048 Active Emitters / 131,072 Particles across 4 Materials** (All 6 advanced modules enabled: `Main`, `Multi-Burst`, `Donut/Cone/Sphere/Box Shapes`, `Color/Size/Rotation Over Lifetime & By Speed`, `Noise`, `Analytical Plane Collision` up to 3 bounces, and `ParticleSystemForceField` External Forces)
@@ -27,6 +27,18 @@ Unity's built-in **Shuriken (`ParticleSystem`)** simulates and sorts every parti
 | **>20ms Frame Spikes** | `90 / 90 frames` (`100%`) | **`0 / 90 frames` (`0%`)** | **`0 / 90 frames` (`0%`)** | **100% Spike Elimination** |
 | **Draw Calls** | `1,448.4` | **`26.0`** | **`23.0`** | **`-98.2%` Draw Call Reduction** |
 | **SetPass Calls** | `16.0` | **`9.0`** | **`10.0`** | **`-43.8%` Reduction** |
+
+### 1-2. Mobile Device Benchmark (Samsung Galaxy Z Fold 2 — Android Vulkan)
+- **Hardware**: Samsung Galaxy Z Fold 2 (`SM-F916N`, Qualcomm Snapdragon 865+, `Adreno 650` GPU, Android 13, `2658×960` @ 60Hz Hardware VSync)
+- **Engine**: Unity 6000.x (IL2CPP ARM64, Vulkan, URP 17.3 RenderGraph)
+- **Workload**: Same **2,048 Active Emitters / 131,072 Particles across 4 Materials** (`3D Lit Mesh Smoke Sphere`, `Stretched Additive Spark + 3-Bounce Floor Collision`, `Additive Flame Billboard`, `3D Lit Mesh Ore Debris Cube + Floor Collision`, `ParticleSystemForceField` Wind)
+
+| Metric | Phase 1: Built-in CPU Shuriken (`126,260` Active Particles) | Phase 2: `ShurikenBridge` Wide View (`66,826` Visible Particles + 3-Tier GPU LOD) | Phase 3: `ShurikenBridge` Zoomed Sector (`34,042` Visible Particles + 6-Plane GPU Culling) | Mobile Improvement (Native $\to$ `ShurikenBridge`) |
+| :--- | :---: | :---: | :---: | :---: |
+| **Average FPS (60Hz Display)** | `15.6 FPS` | **`59.9 FPS` (60Hz Locked)** | **`59.9 FPS` (60Hz Locked)** | **`3.84x` (`15.6 FPS -> 60 FPS Cap`)** |
+| **Average Frame Time** | `64.31 ms` *(Min `50.0ms`, Max `83.4ms`)* | **`16.68 ms`** | **`16.68 ms`** | **`-74.1%` Frame Time** |
+| **>20ms Frame Spikes** | `55 / 55 frames` (`100%`) | **`0 / 90 frames` (`0%`)** | **`0 / 90 frames` (`0%`)** | **100% Spike Elimination** |
+| **Draw Calls** | `2,062.0` (`Batches: 1,582.9`, `SetPass: 562.9`) | **`25.0`** | **`26.0`** | **`-98.8%` (`2,062 -> 25`)** |
 
 ---
 
