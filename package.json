@@ -1,0 +1,34 @@
+{
+  "name": "com.shurikenbridge.core",
+  "version": "1.0.0",
+  "displayName": "ShurikenBridge — Zero-CPU GPU Particle System Bridge (URP & Built-in RP)",
+  "description": "Drop-in GPU Compute + RenderMeshIndirect bridge for Unity's built-in ParticleSystem (Shuriken) on URP 14–17 and Built-in RP. Keep 100% of Unity's native ParticleSystem Inspector UI, Scene gizmos, and any URP/Built-in/Custom/ShaderGraph materials while batching thousands of emitters on the GPU with zero URP source modifications.",
+  "unity": "2022.3",
+  "dependencies": {
+    "com.unity.render-pipelines.universal": "14.0.0"
+  },
+  "keywords": [
+    "particle",
+    "shuriken",
+    "gpu",
+    "compute",
+    "urp",
+    "rendergraph",
+    "indirect",
+    "instancing",
+    "optimization"
+  ],
+  "author": {
+    "name": "Rwaaa",
+    "email": "parkjsue@gmail.com",
+    "url": "https://github.com/Rwaaa"
+  },
+  "license": "MIT",
+  "samples": [
+    {
+      "displayName": "Factory Multi-Material 2048-Emitter Benchmark",
+      "description": "Standalone 3-Phase A/B benchmark comparing 2,048 built-in CPU Shuriken emitters (131,072 particles across 4 materials) against ShurikenBridge with GPU Frustum Culling, 3-Tier Distance LOD, Plane Bounce Collision, and Force Fields.",
+      "path": "Samples~/FactoryBenchmark"
+    }
+  ]
+}
