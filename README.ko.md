@@ -1,5 +1,7 @@
 # ShurikenBridge (`com.shurikenbridge.core`)
 
+![ShurikenBridge Banner](Documentation~/shurikenbridge_banner.jpg)
+
 **[English](README.md) | [한국어 (Korean)](README.ko.md)**
 
 > **Unity 기본 `ParticleSystem`(Shuriken) 인스펙터와 기즈모를 100% 그대로 유지하면서 URP (14–17) 및 Built-in RP에서 동작하는 Zero-CPU 드롭인 GPU 파티클 브릿지**

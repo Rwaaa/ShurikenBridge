@@ -1,5 +1,7 @@
 # ShurikenBridge (`com.shurikenbridge.core`)
 
+![ShurikenBridge Banner](Documentation~/shurikenbridge_banner.jpg)
+
 **[English](README.md) | [한국어 (Korean)](README.ko.md)**
 
 > **Zero-CPU Drop-In GPU Particle System Bridge for Unity's Built-In `ParticleSystem` (Shuriken) on URP 14–17 & Built-in RP**
